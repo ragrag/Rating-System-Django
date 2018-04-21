@@ -1,0 +1,29 @@
+
+{% extends 'accounts/base.html' %}
+{% block title %}{{user.username}}{% endblock %}
+{% block body %}
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" >
+	<div class="row" >
+
+
+
+
+	<div  id="main" class="col-lg-5 col-sm-6" style="position:absolute;left:30%;" >
+
+{% if not request.user.profile.group %}
+<h1>You are not a member of any team</h1>
+{% else %}
+		<h1>You are a member for team <a href="/team/{{request.user.profile.group.id}}">{{request.user.profile.group}}</a></h1>
+{% endif %}
+</div>
+
+</div>
+
+</div>
+
+
+
+{% endblock %}

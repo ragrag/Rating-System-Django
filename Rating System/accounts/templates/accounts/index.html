@@ -1,0 +1,46 @@
+
+
+{% extends 'accounts/base.html' %}
+{% block title %}HOME{% endblock %}
+{% load staticfiles %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{% static 'accounts/index.css' %}">
+{% endblock %}
+{% block body %}
+
+
+<div  id="main" class="col-lg-5 col-sm-6" style="position:absolute;left:30%;" >
+
+<table class="table table-condensed" >
+  <thead class="thead-inverse">
+    <tr>
+      <th>#</th>
+        <th>Team</th>
+        <th>Points</th>
+    </tr>
+  </thead>
+  <tbody>
+
+  {% for Team in teams %}
+
+  	{% if Team == profile.group %}
+
+
+  <tr class="success">
+	  {% else %}
+  <tr >
+	  {% endif %}
+      <th scope="row">{{ forloop.counter }}</th>
+      <td style="padding:20px;"><img width="20px" height="20px" src="/media/{{Team.avatar}}"/> <a href="/team/{{Team.id}}"> {{Team.name}}</a></td>
+
+      <td>{{Team.points}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,96 @@
+
+{% extends 'accounts/base.html' %}
+{% block title %}{{user.username}}{% endblock %}
+{% block body %}
+
+
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container" >
+	<div class="row" >
+
+
+		<div  id="main" class="col-lg-5 col-sm-6" style="position:absolute;left:0%;" >
+          <br>
+			<img src="/media/{{team.avatar}}"/>
+
+			<h2>{{team.points}} Points</h2>
+
+			{% if request.user.is_staff == True %}
+		<br>
+		<form class="form-group" method="post" >
+  			{% csrf_token %}
+  			{{ pointform.as_p }}
+ 			  <button type="submit" name="addpoints">+</button>
+			<button type="submit" name="subpoints">-</button>
+		</form>
+		{% endif %}
+
+		{% if profile.group == team or request.user.is_staff == True %}
+			<div id="scorelog">
+			<ul style="position:absolute;right:70%;top:56%;height:120px;width:30%;overflow:hidden; overflow-y:scroll; "class="list-unstyled">
+				{% for change in changes %}
+				<li {% if change.value > 0 %}style="color:green;">+{% else %}style="color:red;">{% endif %}{{change.value}} {{change.note}}</li>
+				{% endfor %}
+
+
+			</ul>
+		</div>
+		{% endif %}
+	</div>
+
+	<div  id="main" class="col-lg-5 col-sm-6" style="position:absolute;left:30%;" >
+
+
+
+		<h3>Comments</h3><hr>
+		<ul style="position:relative;right:0%;top:20%;height:400px;width:100%;overflow:hidden; overflow-y:scroll; " class="list-unstyled">
+		{% for comment in comments %}
+				{% if comment.public == False and profile.group == team or request.user.is_staff == True %}
+			<li> <b>{{comment.content}}</b><br> {{comment.date_created}}<br>
+
+			{% if request.user.is_staff == True %}
+			 <a href="{% url 'delete_post' comment.id %}">delete</a>&nbsp
+			{% endif %}
+			</li><hr>
+
+			{% elif comment.public == True %}
+			<li> {{comment.content}}<br> {{comment.date_created}}
+
+			{% if request.user.is_staff == True %}
+			 <a href="{% url 'delete_post' comment.id %}">delete</a>&nbsp
+			{% endif %}
+			</li><hr>
+			{% endif %}
+		{% endfor %}
+
+
+		</ul>
+
+		{% if request.user.is_staff == True %}
+		<br>
+		<form class="form-group" method="post" >
+  			{% csrf_token %}
+  			{{ postform.as_p }}
+ 			  <button type="submit" name="addcomment">Post</button>
+		</form>
+		{% endif %}
+	</div>
+
+
+
+		<div  id="main" class="col-lg-5 col-sm-6" style="position:absolute;left:60%;" >
+          <h1>Team members</h1>
+			<ul class="list-unstyled">
+				{% for each in teamusers %}
+				<li><h3>{{ each.user.username}}</h3></li>
+				{% endfor %}
+
+			</ul>
+	</div>
+</div>
+
+</div>
+
+
+
+{% endblock %}
