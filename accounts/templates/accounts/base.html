@@ -52,7 +52,7 @@
                         </a>
                     {% endif %}
 
-                    {% if request.user.is_staff == True %}
+                    {% if request.user.is_superuser == True %}
                         <a  href="/admin">
                             <span  aria-hidden="true"></span>&nbsp; {{ request.user.username }}
                         </a>
