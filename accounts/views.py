@@ -173,7 +173,7 @@ class get_user_profile(View):
     form_class2 = PointUpdate
     def get(self, request, id):
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
 
 
             user = request.user

@@ -11,7 +11,7 @@ def index(request):
         groups = Team.objects.order_by('-points')
 
 
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
                 user = request.user
                 groups = Team.objects.order_by('-points')
                 profile = user.profile
